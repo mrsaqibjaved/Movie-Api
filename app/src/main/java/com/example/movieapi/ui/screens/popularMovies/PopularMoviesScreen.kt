@@ -29,26 +29,25 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.movieapi.R
 import com.example.movieapi.data.model.Result
-import com.example.movieapi.data.uiState.ApiResponse
 import com.example.movieapi.ui.sharedComponent.ErrorScreen
 import com.example.movieapi.ui.sharedComponent.LoadingScreen
 import com.example.movieapi.ui.sharedComponent.MovieImage
+import com.example.movieapi.ui.theme.LightCyan
 import com.example.movieapi.ui.theme.MovieText
 import com.example.movieapi.ui.theme.MovieTitle
 
 @Composable
-fun PopularMoviesScreen(apiResponse: ApiResponse,onItemClick: (Int) -> Unit) {
+fun PopularMoviesScreen(apiResponse: ApiResponse,onItemClick: (String) -> Unit) {
     when (apiResponse) {
         is ApiResponse.Success -> MovieList(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Cyan)
+                .background(LightCyan)
                 .padding(10.dp),
             apiResponse.responseResult,
         ){id->
-            onItemClick(id)
+            onItemClick(id.toString())
         }
-
         is ApiResponse.Error -> ErrorScreen()
         is ApiResponse.Loading -> LoadingScreen(
         )
@@ -92,7 +91,7 @@ fun MovieItem(modifier: Modifier, result: Result, onItemClick: () -> Unit) {
             modifier = Modifier
                 .width(100.dp)
                 .requiredHeight(140.dp)
-                .clip(RoundedCornerShape(8.dp)), result.posterPath
+                .clip(RoundedCornerShape(10.dp)), result.posterPath
         )
         MovieTextItem(modifier = Modifier, result = result)
     }

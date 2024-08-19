@@ -2,7 +2,8 @@ package com.example.movieapi.ui.screens.popularMovies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapi.data.uiState.ApiResponse
+import com.example.movieapi.data.DataSource
+import com.example.movieapi.data.model.Result
 import com.example.movieapi.data.uiState.PopularMoviesUiState
 import com.example.movieapi.domain.usecase.GetPopularMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,8 +20,11 @@ class PopularMoviesViewModel @Inject constructor(
     private val _popularMoviesUiState = MutableStateFlow(PopularMoviesUiState())
     val popularMoviesUiState = _popularMoviesUiState.asStateFlow()
 
+    init {
+        getPopularMoviesUiState(DataSource.API_KEY)
+    }
 
-    fun getPopularMoviesUiState(apiKey: String) {
+    private fun getPopularMoviesUiState(apiKey: String) {
         viewModelScope.launch {
             _popularMoviesUiState.update {
                 val responseResult = getPopularMoviesUseCase.execute(apiKey)
@@ -35,4 +39,10 @@ class PopularMoviesViewModel @Inject constructor(
             }
         }
     }
+}
+
+sealed interface ApiResponse{
+    data class Success(val responseResult: List<Result>): ApiResponse
+    data object Loading: ApiResponse
+    data object Error: ApiResponse
 }

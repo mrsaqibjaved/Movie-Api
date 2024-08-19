@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,8 +27,8 @@ fun LoadingScreen() {
     Image(
         painter = painterResource(id = R.drawable.loading),
         contentDescription = stringResource(id = R.string.loading),
-        contentScale = ContentScale.Crop,
-        modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp)
+        contentScale = ContentScale.FillBounds,
+        modifier = Modifier.fillMaxSize()
     )
 }
 
@@ -57,15 +55,16 @@ fun ErrorScreen() {
 }
 
 @Composable
-fun MovieImage(modifier: Modifier, imageSrc: String) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(DataSource.POSTER_BASE_URL + imageSrc)
-            .crossfade(true)
-            .error(R.drawable.connectionerror)
-            .build(),
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = modifier.clip(RoundedCornerShape(10.dp))
-    )
+fun MovieImage(modifier: Modifier, imageSrc: String?) {
+    if (imageSrc != null) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(DataSource.POSTER_BASE_URL + imageSrc)
+                .crossfade(true)
+                .error(R.drawable.connectionerror)
+                .build(),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = modifier)
+    }
 }

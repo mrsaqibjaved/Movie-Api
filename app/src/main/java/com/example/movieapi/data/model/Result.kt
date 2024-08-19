@@ -15,6 +15,8 @@ data class Result(
     val popularity: Double,
     @SerialName("poster_path")
     val posterPath: String,
+    @SerialName("belongs_to_collection")
+    val belongsToCollection: BelongsToCollection? = null,
     @SerialName("release_date")
     val date: String,
     val title: String,
