@@ -79,12 +79,13 @@ fun AppBar(
     canNavigateBack: Boolean,
     navigateBack: () -> Unit,
 ) {
-
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = ScreenBackground
         ),
-        modifier = modifier.height(56.dp),
+        modifier = modifier
+            .padding(top = 30.dp, bottom = 16.dp) // Adjust the padding as needed
+            .height(56.dp),
 
         title = {
             Text(stringResource(movieScreens.titleResource))
@@ -101,6 +102,7 @@ fun AppBar(
         },
     )
 }
+
 
 sealed class MovieScreens(val route: String, @StringRes val titleResource: Int) {
     data object PopularMovies : MovieScreens("Popular Movies", R.string.popular_movies)
