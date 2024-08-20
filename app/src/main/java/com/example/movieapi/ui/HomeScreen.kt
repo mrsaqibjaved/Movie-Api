@@ -16,6 +16,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -79,12 +80,15 @@ fun AppBar(
     canNavigateBack: Boolean,
     navigateBack: () -> Unit,
 ) {
+    val topPadding = dimensionResource(id = R.dimen.app_bar_top_padding)
+    val bottomPadding = dimensionResource(id = R.dimen.app_bar_bottom_padding)
+
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = ScreenBackground
         ),
         modifier = modifier
-            .padding(top = 30.dp, bottom = 16.dp) // Adjust the padding as needed
+            .padding(top = topPadding, bottom = bottomPadding)
             .height(56.dp),
 
         title = {
@@ -102,6 +106,7 @@ fun AppBar(
         },
     )
 }
+
 
 
 sealed class MovieScreens(val route: String, @StringRes val titleResource: Int) {
