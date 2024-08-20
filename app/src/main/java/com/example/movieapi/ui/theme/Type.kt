@@ -49,3 +49,11 @@ val MovieText = TextStyle(
     letterSpacing = 0.5.sp,
     color = Color.White
 )
+val MovieDetailText = TextStyle(
+    fontFamily = FontFamily.Default,
+    fontWeight = FontWeight.Normal,
+    fontSize = 16.sp,
+    lineHeight = 18.sp,
+    letterSpacing = 0.5.sp,
+    color = MovieDetailTextColor
+)

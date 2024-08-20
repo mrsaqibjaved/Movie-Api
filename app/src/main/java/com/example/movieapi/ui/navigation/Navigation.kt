@@ -1,18 +1,17 @@
 package com.example.movieapi.ui.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.movieapi.R
 import com.example.movieapi.data.DataSource
+import com.example.movieapi.ui.MovieScreens
 import com.example.movieapi.ui.screens.movieDetails.MovieDetailsScreen
 import com.example.movieapi.ui.screens.movieDetails.MovieDetailsViewModel
 import com.example.movieapi.ui.screens.popularMovies.PopularMoviesScreen
@@ -20,8 +19,7 @@ import com.example.movieapi.ui.screens.popularMovies.PopularMoviesViewModel
 
 
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(modifier: Modifier,navController: NavHostController) {
 
     val moviesViewModel: PopularMoviesViewModel = hiltViewModel()
     val moviesUiState by moviesViewModel.popularMoviesUiState.collectAsStateWithLifecycle()
@@ -31,7 +29,7 @@ fun Navigation() {
 
     NavHost(
         navController = navController, startDestination = MovieScreens.PopularMovies.route,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier
     ) {
         composable(route = MovieScreens.PopularMovies.route) {
 
@@ -55,16 +53,3 @@ fun Navigation() {
 }
 
 
-sealed class MovieScreens(val route: String, val titleResource: Int) {
-    data object PopularMovies : MovieScreens("Popular Movies", R.string.popular_movies)
-    data object MovieDetail : MovieScreens("Movie Details", R.string.movie_detail)
-
-    fun withArgs(vararg args: String): String {
-        return buildString {
-            append(route)
-            args.forEach { arg ->
-                append("/$arg")
-            }
-        }
-    }
-}

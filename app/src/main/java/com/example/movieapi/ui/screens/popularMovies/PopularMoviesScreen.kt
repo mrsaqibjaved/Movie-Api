@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,9 +34,9 @@ import com.example.movieapi.data.model.Result
 import com.example.movieapi.ui.sharedComponent.ErrorScreen
 import com.example.movieapi.ui.sharedComponent.LoadingScreen
 import com.example.movieapi.ui.sharedComponent.MovieImage
-import com.example.movieapi.ui.theme.LightCyan
 import com.example.movieapi.ui.theme.MovieText
 import com.example.movieapi.ui.theme.MovieTitle
+import com.example.movieapi.ui.theme.ScreenBackground
 
 @Composable
 fun PopularMoviesScreen(apiResponse: ApiResponse,onItemClick: (String) -> Unit) {
@@ -42,8 +44,8 @@ fun PopularMoviesScreen(apiResponse: ApiResponse,onItemClick: (String) -> Unit) 
         is ApiResponse.Success -> MovieList(
             modifier = Modifier
                 .fillMaxSize()
-                .background(LightCyan)
-                .padding(10.dp),
+                .background(ScreenBackground)
+                .padding(horizontal = 10.dp),
             apiResponse.responseResult,
         ){id->
             onItemClick(id.toString())
@@ -63,7 +65,7 @@ fun MovieList(
     VerticalDivider(modifier = Modifier.height(20.dp))
     LazyColumn(
         modifier = modifier, verticalArrangement = Arrangement.spacedBy(40.dp),
-        contentPadding = PaddingValues(vertical = 20.dp)
+        contentPadding = PaddingValues(top = 10.dp, bottom = 20.dp)
     ) {
         items(responseResult) { result ->
             MovieItem(
